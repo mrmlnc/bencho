@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# IDE & editors
+.idea
+.vscode
+
+# Dependency directory
+node_modules/
+
+# Compiled and temporary files
+out/
+build/
+.eslintcache
+tsconfig.tsbuildinfo
+
+# Other files
+package-lock.json

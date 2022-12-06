@@ -1,0 +1,70 @@
+{
+  "name": "bencho",
+  "version": "0.1.0",
+  "description": "A command-line benchmarking tool.",
+  "license": "MIT",
+  "engines": {
+    "node": "^14.17.0 || >=16.0.0"
+  },
+  "type": "module",
+  "bin": "./bin/bencho.js",
+  "exports": {
+    "import": "./build/marker.js",
+    "require": "./build/marker.cjs",
+    "types": "./types/marker.d.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./types/marker.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "bin",
+    "build",
+    "types"
+  ],
+  "scripts": {
+    "clean": "rimraf {tsconfig.tsbuildinfo,out,build}",
+    "compile": "tsc -b",
+    "compile:watch": "tsc -b -w",
+    "watch": "npm run clean && npm run compile:watch",
+    "build:cli": "esbuild --platform=node --format=esm --bundle ./out/cli/cli.js --outfile=./build/cli.js",
+    "build:marker": "npm run _build:marker:esm && npm run _build:marker:cjs",
+    "_build:marker:esm": "npm run _build:marker -- --format=esm --outfile=./build/marker.js",
+    "_build:marker:cjs": "npm run _build:marker -- --format=cjs --outfile=./build/marker.cjs",
+    "_build:marker": "esbuild --platform=node --format=cjs --bundle ./out/marker/marker.js",
+    "build": "npm run clean && npm run compile && npm run build:cli && npm run build:marker",
+    "lint": "eslint \"src/**/*.ts\" --cache",
+    "test": "mocha \"out/**/*.spec.js\" -s 0",
+    "example": "npm run _example:detail && npm run _example:benchmark && npm run _example:compact",
+    "_example:detail": "npm run _example -- --reporter detail",
+    "_example:benchmark": "npm run _example -- --reporter benchmark",
+    "_example:compact": "npm run _example -- --reporter compact",
+    "_example": "node ./build/cli.js 'node --expose-gc ./examples/min.js {mode}' -n 'min.js {mode}' -r 1 -l mode=math,math-spread,loop,sort,reduce --allow-multiple"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^14.18.41",
+    "@types/sinon": "^10.0.13",
+    "@types/yargs": "^17.0.24",
+    "chalk": "^5.2.0",
+    "easy-table": "^1.2.0",
+    "esbuild": "^0.17.15",
+    "eslint": "^8.37.0",
+    "eslint-config-mrmlnc": "^3.0.0",
+    "fast-cartesian": "^7.6.0",
+    "mocha": "^10.2.0",
+    "p-defer": "^4.0.0",
+    "p-map": "^5.5.0",
+    "p-times": "^4.0.0",
+    "pretty-bytes": "^6.1.0",
+    "pretty-ms": "^8.0.0",
+    "rimraf": "^4.4.1",
+    "simple-statistics": "^7.8.3",
+    "sinon": "^15.0.3",
+    "typescript": "^5.0.3",
+    "yargs": "^17.7.1"
+  }
+}
