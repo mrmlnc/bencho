@@ -8,17 +8,13 @@
   },
   "type": "module",
   "bin": "./bin/bencho.js",
+  "main": "./build/marker.cjs",
+  "module": "./build/marker.js",
+  "types": "./types/marker.d.ts",
   "exports": {
     "import": "./build/marker.js",
     "require": "./build/marker.cjs",
     "types": "./types/marker.d.ts"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./types/marker.d.ts"
-      ]
-    }
   },
   "files": [
     "bin",
